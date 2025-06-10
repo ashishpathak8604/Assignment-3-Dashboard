@@ -37,13 +37,13 @@ const Topbar = () => {
   return (
     <div className="flex justify-end items-center gap-6 p-4 bg-white shadow-sm border-b border-gray-100 relative">
       {/* Theme Toggle */}
-      {/* <button
+      <button
         className="text-gray-600 hover:text-blue-500"
         onClick={toggleTheme}
         aria-label="Toggle theme"
       >
         {theme === "dark" ? <FaSun size={18} /> : <FaMoon size={18} />}
-      </button> */}
+      </button>
 
       {/* Notifications */}
       <div className="relative" ref={notifRef}>
