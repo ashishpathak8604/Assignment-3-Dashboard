@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import '../styles/calendar.css';
 
 const LOCAL_STORAGE_KEY = 'calendar-events';
 
@@ -17,7 +18,6 @@ const CalendarPage = () => {
   const formattedDate = date.toISOString().split('T')[0];
   const selectedEvents = events[formattedDate] || [];
 
-  // Load events from localStorage
   useEffect(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (saved) {
@@ -25,7 +25,6 @@ const CalendarPage = () => {
     }
   }, []);
 
-  // Save to localStorage whenever events change
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(events));
   }, [events]);
@@ -71,19 +70,19 @@ const CalendarPage = () => {
   );
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-md max-w-6xl mx-auto mt-6">
+    <div className="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md max-w-6xl mx-auto mt-6 text-gray-800 dark:text-gray-100">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">📅 Calendar</h2>
+        <h2 className="text-2xl font-bold">📅 Calendar</h2>
         <div className="flex gap-4">
           <input
             type="text"
             placeholder="Search by event or date (YYYY-MM-DD)"
-            className="border border-gray-300 rounded-md p-2 text-sm w-64"
+            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm w-64 p-2 rounded-md"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <select
-            className="border border-gray-300 rounded-md p-2 text-sm"
+            className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm p-2 rounded-md"
             value={view}
             onChange={(e) => setView(e.target.value)}
           >
@@ -94,7 +93,7 @@ const CalendarPage = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-8">
-        <div className="rounded-lg overflow-hidden border border-gray-300 shadow-md">
+        <div className="rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700 shadow-md">
           <Calendar
             onChange={setDate}
             value={date}
@@ -109,7 +108,7 @@ const CalendarPage = () => {
 
         <div className="flex-1">
           <div className="flex justify-between items-center mb-3">
-            <h3 className="text-lg font-semibold text-gray-700">
+            <h3 className="text-lg font-semibold">
               Events on {date.toDateString()}
             </h3>
             <button
@@ -125,9 +124,9 @@ const CalendarPage = () => {
           </div>
 
           {selectedEvents.length > 0 ? (
-            <ul className="space-y-2 text-gray-800">
+            <ul className="space-y-2">
               {selectedEvents.map((event, idx) => (
-                <li key={idx} className="flex justify-between items-center bg-gray-100 p-2 rounded-md">
+                <li key={idx} className="flex justify-between items-center bg-gray-100 dark:bg-gray-800 p-2 rounded-md">
                   <span>{event}</span>
                   <div className="flex gap-2">
                     <button
@@ -147,7 +146,7 @@ const CalendarPage = () => {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500 italic">No events for this date.</p>
+            <p className="text-gray-500 dark:text-gray-400 italic">No events for this date.</p>
           )}
         </div>
       </div>
@@ -155,31 +154,31 @@ const CalendarPage = () => {
       {/* Search Results */}
       {searchTerm && (
         <div className="mt-8">
-          <h4 className="text-md font-semibold mb-2 text-gray-700">🔍 Search Results</h4>
+          <h4 className="text-md font-semibold mb-2">🔍 Search Results</h4>
           {filteredResults.length > 0 ? (
             <ul className="list-disc pl-5 space-y-1">
               {filteredResults.map((item, idx) => (
-                <li key={idx} className="text-gray-700">
+                <li key={idx}>
                   {item.event} on {item.date}
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500 italic">No matching events found.</p>
+            <p className="text-gray-500 dark:text-gray-400 italic">No matching events found.</p>
           )}
         </div>
       )}
 
-      {/* Add/Edit Modal */}
+      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
             <h4 className="text-lg font-semibold mb-4">
               {isEditing ? 'Edit Event' : 'Add Event'} on {date.toDateString()}
             </h4>
             <input
               type="text"
-              className="w-full border border-gray-300 rounded-md p-2 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="w-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-100 p-2 rounded-md mb-4"
               placeholder="Event name"
               value={newEvent}
               onChange={(e) => setNewEvent(e.target.value)}
@@ -190,7 +189,7 @@ const CalendarPage = () => {
                   setShowModal(false);
                   setIsEditing(false);
                 }}
-                className="px-4 py-1 border rounded-md text-gray-600 hover:bg-gray-100"
+                className="px-4 py-1 border rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 Cancel
               </button>

@@ -41,7 +41,6 @@ const userTypeData = [
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b'];
 
-// Utility functions for statistics
 const sum = arr => arr.reduce((a, b) => a + b, 0);
 const avg = arr => (arr.length ? (sum(arr) / arr.length).toFixed(2) : 0);
 
@@ -84,52 +83,36 @@ const Charts = () => {
   const [activeTab, setActiveTab] = useState('line');
   const [reportOpen, setReportOpen] = useState(false);
 
-  // Modal content based on active chart
   const renderReport = () => {
     const stats = getStats(activeTab);
-    if (activeTab === 'line') {
-      return (
-        <div>
-          <h4 className="font-semibold mb-2">Sales Trends Report</h4>
-          <ul className="text-sm">
-            <li>Total Sales: <span className="font-medium">{stats.total}</span></li>
-            <li>Average Sales: <span className="font-medium">{stats.average}</span></li>
-            <li>Max Sales: <span className="font-medium">{stats.max}</span></li>
-            <li>Min Sales: <span className="font-medium">{stats.min}</span></li>
-          </ul>
-        </div>
-      );
-    }
-    if (activeTab === 'bar') {
-      return (
-        <div>
-          <h4 className="font-semibold mb-2">Monthly Revenue Report</h4>
-          <ul className="text-sm">
-            <li>Total Revenue: <span className="font-medium">{stats.total}</span></li>
-            <li>Average Revenue: <span className="font-medium">{stats.average}</span></li>
-            <li>Max Revenue: <span className="font-medium">{stats.max}</span></li>
-            <li>Min Revenue: <span className="font-medium">{stats.min}</span></li>
-          </ul>
-        </div>
-      );
-    }
-    if (activeTab === 'pie') {
-      return (
-        <div>
-          <h4 className="font-semibold mb-2">User Types Report</h4>
-          <ul className="text-sm">
-            <li>Total Users: <span className="font-medium">{stats.total}</span></li>
-            <li>Breakdown: <span className="font-medium">{stats.breakdown}</span></li>
-          </ul>
-        </div>
-      );
-    }
-    return null;
+    return (
+      <div>
+        <h4 className="font-semibold mb-2">
+          {activeTab === 'line' && 'Sales Trends Report'}
+          {activeTab === 'bar' && 'Monthly Revenue Report'}
+          {activeTab === 'pie' && 'User Types Report'}
+        </h4>
+        <ul className="text-sm">
+          {activeTab !== 'pie' ? (
+            <>
+              <li>Total: <span className="font-medium">{stats.total}</span></li>
+              <li>Average: <span className="font-medium">{stats.average}</span></li>
+              <li>Max: <span className="font-medium">{stats.max}</span></li>
+              <li>Min: <span className="font-medium">{stats.min}</span></li>
+            </>
+          ) : (
+            <>
+              <li>Total Users: <span className="font-medium">{stats.total}</span></li>
+              <li>Breakdown: <span className="font-medium">{stats.breakdown}</span></li>
+            </>
+          )}
+        </ul>
+      </div>
+    );
   };
 
   return (
-    <div>
-      {/* Chart Navigation Tabs */}
+    <div className="p-4">
       <div className="flex gap-2 mb-6 border-b">
         {chartTabs.map(tab => (
           <button
@@ -146,14 +129,15 @@ const Charts = () => {
         ))}
       </div>
 
-      {/* Chart Content */}
-      <div className="bg-white p-4 rounded-lg shadow-sm relative">
+      <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm relative text-black dark:text-gray-100">
+
         <button
           className="absolute top-4 right-4 px-3 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition"
           onClick={() => setReportOpen(true)}
         >
           Report
         </button>
+
         {activeTab === 'line' && (
           <>
             <h3 className="text-sm font-semibold mb-2">Sales Trends</h3>
@@ -168,6 +152,7 @@ const Charts = () => {
             </ResponsiveContainer>
           </>
         )}
+
         {activeTab === 'bar' && (
           <>
             <h3 className="text-sm font-semibold mb-2">Monthly Revenue</h3>
@@ -182,6 +167,7 @@ const Charts = () => {
             </ResponsiveContainer>
           </>
         )}
+
         {activeTab === 'pie' && (
           <>
             <h3 className="text-sm font-semibold mb-2">User Types</h3>
@@ -209,10 +195,10 @@ const Charts = () => {
         )}
       </div>
 
-      {/* Modal */}
       {reportOpen && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-80 text-black dark:text-gray-100">
+
             {renderReport()}
             <button
               className="mt-4 px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 text-gray-700"

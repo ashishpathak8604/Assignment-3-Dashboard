@@ -10,9 +10,9 @@ const initialColumns = [
 ];
 
 const statusBadge = {
-  todo: 'bg-blue-100 text-blue-700',
-  inprogress: 'bg-yellow-100 text-yellow-700',
-  done: 'bg-green-100 text-green-700',
+  todo: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200',
+  inprogress: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-200',
+  done: 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-200',
 };
 
 const Kanban = () => {
@@ -20,13 +20,11 @@ const Kanban = () => {
   const [showModal, setShowModal] = useState(false);
   const [newTask, setNewTask] = useState({ title: '', assignee: '', status: 'todo' });
 
-  // Load from localStorage
   useEffect(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (saved) setTasks(JSON.parse(saved));
   }, []);
 
-  // Save to localStorage
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(tasks));
   }, [tasks]);
@@ -48,12 +46,12 @@ const Kanban = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Kanban Board</h2>
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Kanban Board</h2>
         <button
           onClick={() => setShowModal(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
         >
           + Add Task
         </button>
@@ -67,9 +65,11 @@ const Kanban = () => {
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
-                  className={`bg-white rounded-lg p-4 w-1/3 min-h-[500px] border-t-4 ${col.color} shadow`}
+                  className={`rounded-lg p-4 w-1/3 min-h-[500px] border-t-4 ${col.color} shadow bg-white dark:bg-gray-800 transition-colors`}
                 >
-                  <h3 className="font-semibold text-lg mb-4">{col.title}</h3>
+                  <h3 className="font-semibold text-lg mb-4 text-gray-800 dark:text-white">
+                    {col.title}
+                  </h3>
                   {tasks
                     .filter((task) => task.status === col.id)
                     .map((task, index) => (
@@ -79,7 +79,7 @@ const Kanban = () => {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            className={`mb-4 p-4 bg-gray-50 rounded shadow-sm border-l-4 ${col.color}`}
+                            className={`mb-4 p-4 rounded shadow-sm border-l-4 ${col.color} bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors`}
                           >
                             <div className="flex items-center justify-between">
                               <span className="font-medium">{task.title}</span>
@@ -89,7 +89,9 @@ const Kanban = () => {
                                 {col.title}
                               </span>
                             </div>
-                            <div className="mt-1 text-sm text-gray-500">{task.assignee}</div>
+                            <div className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                              {task.assignee}
+                            </div>
                           </div>
                         )}
                       </Draggable>
@@ -102,25 +104,24 @@ const Kanban = () => {
         </div>
       </DragDropContext>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-30 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md shadow-lg">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-full max-w-md shadow-lg text-gray-800 dark:text-white">
             <h3 className="text-lg font-bold mb-4">Add New Task</h3>
             <input
-              className="w-full p-2 border rounded mb-3"
+              className="w-full p-2 border rounded mb-3 dark:bg-gray-700 dark:text-white dark:border-gray-600"
               placeholder="Title"
               value={newTask.title}
               onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
             />
             <input
-              className="w-full p-2 border rounded mb-3"
+              className="w-full p-2 border rounded mb-3 dark:bg-gray-700 dark:text-white dark:border-gray-600"
               placeholder="Assignee"
               value={newTask.assignee}
               onChange={(e) => setNewTask({ ...newTask, assignee: e.target.value })}
             />
             <select
-              className="w-full p-2 border rounded mb-4"
+              className="w-full p-2 border rounded mb-4 dark:bg-gray-700 dark:text-white dark:border-gray-600"
               value={newTask.status}
               onChange={(e) => setNewTask({ ...newTask, status: e.target.value })}
             >
@@ -130,7 +131,7 @@ const Kanban = () => {
             </select>
             <div className="flex justify-end gap-2">
               <button
-                className="px-4 py-1 border rounded text-gray-600 hover:bg-gray-100"
+                className="px-4 py-1 border rounded text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-600"
                 onClick={() => setShowModal(false)}
               >
                 Cancel

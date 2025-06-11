@@ -11,3 +11,17 @@
     to { opacity: 1; transform: translateY(0);}
   }
 }
+* {
+  transition: background-color 0.3s, color 0.3s;
+}
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+  a {
+    @apply text-blue-600 dark:text-blue-400 hover:underline;
+  }
+}

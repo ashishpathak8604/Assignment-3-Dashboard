@@ -1,4 +1,3 @@
-// src/components/Sidebar.jsx
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -21,21 +20,28 @@ const Sidebar = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="w-64 min-h-screen bg-white shadow-md p-4">
-      <h1 className="text-xl font-bold mb-6">AdminPro</h1>
+    <div className="bg-white dark:bg-gray-900 text-gray-800 dark:text-white h-60 w-60 px-4 py-6 transition-colors duration-300">
+      <h1 className="text-xl font-bold mb-6 text-gray-900 dark:text-white">
+        <Link to="/">AdminPro</Link>
+      </h1>
       <nav className="space-y-2">
-        {navItems.map((item) => (
-          <Link
-            key={item.name}
-            to={item.path}
-            className={`flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition ${
-              pathname === item.path ? 'bg-blue-100 text-blue-600' : 'text-gray-700'
-            }`}
-          >
-            {item.icon}
-            <span>{item.name}</span>
-          </Link>
-        ))}
+        {navItems.map((item) => {
+          const isActive = pathname === item.path;
+          return (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors duration-200
+                ${isActive
+                  ? 'bg-blue-100 text-blue-600 dark:bg-blue-500 dark:text-white'
+                  : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800'
+                }`}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </Link>
+          );
+        })}
       </nav>
     </div>
   );

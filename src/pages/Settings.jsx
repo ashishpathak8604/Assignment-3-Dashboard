@@ -23,14 +23,14 @@ const Settings = () => {
           />
         </div>
         {/* Example: Theme Selection */}
-        <div>
+        {/* <div>
           <label className="block text-gray-700 dark:text-gray-200 mb-2">Theme</label>
           <select className="w-full px-4 py-2 border rounded dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100">
             <option>System Default</option>
             <option>Light</option>
             <option>Dark</option>
           </select>
-        </div>
+        </div> */}
         <button
           type="submit"
           className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"

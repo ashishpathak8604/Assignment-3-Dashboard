@@ -7,16 +7,16 @@ const stats = [
   { title: 'Pending Tasks', value: '154', change: '-2%', color: 'text-red-500' },
 ];
 
-const OverviewCards = () => {
+export const OverviewCards = () => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 ">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
         <div
           key={index}
-          className="bg-white p-4 rounded-lg shadow-sm transition-all duration-200 transform hover:-translate-y-2 hover:shadow-lg cursor-pointer"
+          className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-md hover:shadow-xl transition-all duration-200 transform hover:-translate-y-2 cursor-pointer"
         >
-          <div className="text-sm text-gray-500">{stat.title}</div>
-          <div className="text-xl font-semibold">{stat.value}</div>
+          <div className="text-sm text-gray-500 dark:text-gray-300">{stat.title}</div>
+          <div className="text-xl font-semibold text-gray-900 dark:text-white">{stat.value}</div>
           <div className={`text-xs ${stat.color}`}>{stat.change}</div>
         </div>
       ))}

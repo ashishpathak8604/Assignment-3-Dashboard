@@ -1,0 +1,38 @@
+/* Light mode - default */
+.react-calendar {
+  background-color: white;
+  color: black;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb; /* Tailwind gray-300 */
+}
+
+/* Dark mode */
+.dark .react-calendar {
+  background-color: #1f2937; /* Tailwind gray-800 */
+  color: #e5e7eb; /* Tailwind gray-300 */
+  border: 1px solid #374151; /* Tailwind gray-700 */
+}
+
+.dark .react-calendar__tile--now {
+  background: #2563eb !important; /* Tailwind blue-600 */
+  color: white !important;
+}
+
+.dark .react-calendar__tile--active {
+  background: #3b82f6 !important; /* Tailwind blue-500 */
+  color: white !important;
+}
+
+.dark .react-calendar__navigation button {
+  color: #e5e7eb;
+}
+
+.dark .react-calendar__tile {
+  background: transparent;
+  color: #e5e7eb;
+}
+
+.dark .react-calendar__tile:hover {
+  background-color: #374151; /* Hover effect */
+}
